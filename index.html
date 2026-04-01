@@ -258,7 +258,90 @@ body {
         </div>
     </main>
 
+<div class="clima-container">
+    <div class="clima-wrapper">
+        <div class="clima-ticker" id="ticker-clima-1">Sincronizando dados...</div>
+        <div class="clima-ticker" id="ticker-clima-2">Sincronizando dados...</div>
+    </div>
+</div>
+
+<style>
+    .clima-container {
+        width: 100%;
+        background: #455A64; 
+        color: #FFFFFF;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 10px 0;
+        font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        display: flex;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .clima-wrapper {
+        display: flex;
+        width: fit-content;
+        /* Diminuído para 20s para o movimento ficar mais rápido */
+        animation: ticker-loop 20s linear infinite;
+    }
+
+    .clima-ticker {
+        display: flex;
+        flex-shrink: 0;
+    }
+
+    .clima-item {
+        margin-right: 80px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    @keyframes ticker-loop {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+</style>
+
+<script>
+    async function atualizarClima() {
+        const apiKey = '936224fc4d0527d53efee60f3396cf85';
+        const url = `https://api.openweathermap.org/data/2.5/weather?id=3451138&units=metric&lang=pt_br&appid=${apiKey}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (response.ok) {
+                const temp = Math.round(data.main.temp);
+                const desc = data.weather[0].description.toUpperCase();
+                const umidade = data.main.humidity;
+                const vento = Math.round(data.wind.speed * 3.6);
+
+                const conteudo = `
+                    <span class="clima-item">📍 RIO GRANDE: ${temp}°C</span>
+                    <span class="clima-item">☁️ CONDIÇÃO: ${desc}</span>
+                    <span class="clima-item">💧 UMIDADE: ${umidade}%</span>
+                    <span class="clima-item">🌬️ VENTO: ${vento} KM/H</span>
+                `;
+
+                document.getElementById('ticker-clima-1').innerHTML = conteudo;
+                document.getElementById('ticker-clima-2').innerHTML = conteudo;
+            }
+        } catch (e) { console.error("Erro clima"); }
+    }
+
+    atualizarClima();
+    setInterval(atualizarClima, 900000);
+</script>
+
+<!--
 <div id="ww_f1f7ef4040624" v='1.3' loc='id' a='{"t":"ticker","lang":"pt","sl_lpl":1,"ids":["wl4986"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"#455A64","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>Mais previsões: <a href="https://tempolongo.com/rio_de_janeiro_tempo_25_dias/" id="ww_f1f7ef4040624_u" target="_blank">Rio de Janeiro 30 days weather forecast</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_f1f7ef4040624"></script> 
+-->
 
     <footer>
         &copy; 2026 ManyGAMEs - <a href="https://www.manygames.com.br" style="color: #fff; text-decoration: none;">www.manygames.com.br</a>
