@@ -144,6 +144,59 @@
             flex-shrink: 0;
         }
 
+/* NOVOS ESTILOS DO MENU - ADICIONE ESTES */
+.menu-btn {
+    position: absolute;
+    left: 15px;
+    cursor: pointer;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+.menu-btn div {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -100%; 
+    width: 320px; 
+    height: 100%;
+    background: #1a1a1a;
+    z-index: 99;
+    transition: 0.4s;
+    padding: 60px 25px 30px 25px;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+
+.side-menu.active { left: 0; }
+
+.side-menu h2 { color: #ff4d4d; margin-bottom: 20px; font-size: 1.5rem; border-bottom: 2px solid #b30000; padding-bottom: 10px; }
+.side-menu h3 { color: #fff; font-size: 1.1rem; margin-top: 15px; margin-bottom: 5px; }
+.side-menu p { font-size: 0.9rem; line-height: 1.5; color: #ccc; margin-bottom: 10px; }
+.side-menu ul { list-style: none; margin-bottom: 15px; }
+.side-menu li { font-size: 0.9rem; color: #ccc; margin-bottom: 8px; padding-left: 10px; border-left: 3px solid #b30000; }
+
+.overlay-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 98;
+}
+.overlay-bg.active { display: block; }
+
         /* AJUSTES PARA CELULAR DEITADO */
         @media (orientation: landscape) and (max-height: 500px) {
             header, footer { padding: 5px; }
@@ -164,17 +217,24 @@
     <img src="favicon-192.png" alt="Logo">
     <h1>Praia do Cassino ao vivo</h1>
 </header>
+
 <div class="overlay-bg" onclick="toggleMenu()"></div>
 <nav class="side-menu" id="sideMenu">
-    <h2>Sobre a Praia do Cassino</h2>
-    <p>
-        Localizada no Rio Grande (RS), a Praia do Cassino é reconhecida pelo Guinness World Records como a 
-        maior praia do mundo em extensão, com mais de 220 km de areia contínua. 
-    </p>
-    <br>
-    <p>
-        É famosa pelos seus Molhes da Barra, uma obra de engenharia incrível, e pelo emblemático 
-        Navio Altair, encalhado na costa desde 1976, tornando-se um dos principais pontos turísticos da região.
+    <h2>Sobre o Cassino</h2>
+    
+    <p>Localizada em Rio Grande/RS, é considerada a <strong>maior praia em extensão do mundo</strong>, com mais de 240 km de faixa contínua de areia, indo até o Chuí.</p>
+
+    <h3>Principais Atrações:</h3>
+    
+    <ul>
+        <li><strong>Molhes da Barra:</strong> Engenharia com 4,5 km mar adentro. Passeios de vagoneta e avistamento de lobos-marinhos.</li>
+        <li><strong>Navio Altair:</strong> Naufrágio histórico de 1976, localizado a 21 km dos Molhes.</li>
+        <li><strong>Infraestrutura:</strong> Balneário mais antigo do Brasil, com destaque para a Avenida Rio Grande.</li>
+        <li><strong>Natureza:</strong> Vasta faixa de areia ideal para esportes, caminhadas e circulação de carros.</li>
+    </ul>
+
+    <p style="font-size: 0.8rem; color: #888; margin-top: 20px;">
+        Fonte: Informações turísticas de Rio Grande/RS.
     </p>
 </nav>
     <main>
