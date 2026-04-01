@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManyGames - Cassino ao vivo</title>
+    <link rel="icon" href="favicon-192.png">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        /* Reset para ocupar a tela inteira sem sobras */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body { 
+            height: 100%; /* Força o corpo a ter 100% da altura da janela */
+            background: #000; 
+            color: #fff; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Evita barras de rolagem duplas no Google Sites */
+        }
+
+        /* TOPO */
+        header { 
+            background: #b30000; 
+            padding: 12px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+        
+        header img { width: 28px; height: 28px; }
+        header h1 { font-size: 1.1rem; color: #fff; text-transform: uppercase; font-weight: 600; }
+
+        /* ÁREA CENTRAL: Ocupa todo o espaço restante */
+        main { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; /* Coloca o vídeo em cima e o texto embaixo */
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px;
+            gap: 15px; /* Espaço entre o vídeo e o texto */
+        }
+
+        video { 
+            width: 100%; 
+            max-width: 1000px;
+            max-height: 70vh; /* Limita a altura para sobrar espaço para o texto */
+            background: #000;
+            border: 1px solid #333;
+        }
+
+        /* TEXTO ABAIXO DO VÍDEO */
+        .creditos {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .creditos a {
+            color: #ff4d4d; /* Vermelho mais claro para o link se destacar no preto */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .creditos a:hover { text-decoration: underline; }
+
+        /* RODAPÉ */
+        footer { 
+            background: #b30000; 
+            padding: 12px; 
+            text-align: center; 
+            font-size: 0.85rem; 
+            color: #fff; 
+            flex-shrink: 0;
+        }
+
+        /* AJUSTES PARA CELULAR DEITADO */
+        @media (orientation: landscape) and (max-height: 500px) {
+            header, footer { padding: 5px; }
+            header h1 { font-size: 0.9rem; }
+            main { padding: 5px; gap: 5px; }
+            video { max-height: 55vh; }
+            .creditos { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="favicon-192.png" alt="Logo">
+        <h1>Praia do Cassino ao vivo</h1>
+    </header>
+
+    <main>
+        <video id="video" controls autoplay muted playsinline></video>
+        <div class="creditos">
+            <p>Imagens geradas por <a href="https://surfkssino.com" target="_blank">surfkssino.com</a></p>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 ManyGAMEs - <a href="https://www.manygames.com.br" style="color: #fff; text-decoration: none;">www.manygames.com.br</a>
+    </footer>
+
+    <script>
+        const video = document.getElementById('video');
+        const txtUrl = "https://raw.githubusercontent.com/ManyG4MEs/kssino/main/link.txt?t=" + new Date().getTime();
+
+        fetch(txtUrl)
+            .then(res => res.text())
+            .then(url => {
+                const streamUrl = url.trim();
+                if (Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(streamUrl);
+                    hls.attachMedia(video);
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = streamUrl;
+                }
+            })
+            .catch(err => console.error("Erro ao carregar stream:", err));
+    </script>
+</body>
+</html>
+
