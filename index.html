@@ -126,6 +126,35 @@
             })
             .catch(err => console.error("Erro ao carregar stream:", err));
     </script>
+<script>
+  // Função para ativar o tela cheia no elemento de vídeo
+  function enterFullScreen(videoElement) {
+    if (videoElement.requestFullscreen) {
+      videoElement.requestFullscreen();
+    } else if (videoElement.webkitRequestFullscreen) { // Safari/iOS
+      videoElement.webkitRequestFullscreen();
+    } else if (videoElement.msRequestFullscreen) { // IE11
+      videoElement.msRequestFullscreen();
+    }
+  }
+
+  // Detecta mudança na orientação do dispositivo
+  window.addEventListener("orientationchange", function() {
+    const video = document.querySelector("video"); // Seleciona o seu vídeo
+    
+    // Se a orientação for 'landscape' (horizontal)
+    if (window.orientation === 90 || window.orientation === -90) {
+      if (video) {
+        enterFullScreen(video);
+      }
+    } else {
+      // Se voltar para a vertical, sai do fullscreen (opcional)
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  });
+</script>
 </body>
 </html>
 
