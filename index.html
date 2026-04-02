@@ -7,97 +7,20 @@
     <link rel="icon" href="favicon-192.png">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-body {
-    -webkit-text-size-adjust: 100%; /* Impede o navegador de aumentar a fonte sozinho */
-}
-/* --- ESTILOS DO MENU --- */
-.menu-btn {
-    position: absolute;
-    left: 15px;
-    cursor: pointer;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.menu-btn div {
-    width: 25px;
-    height: 3px;
-    background-color: #fff;
-    transition: 0.3s;
-}
-
-/* Painel Lateral (Overlay) */
-.side-menu {
-    position: fixed;
-    top: 0;
-    left: -100%; /* Escondido à esquerda */
-    width: 280px;
-    height: 100%;
-    background: #1a1a1a;
-    z-index: 99;
-    transition: 0.4s;
-    padding: 60px 20px;
-    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-}
-
-.side-menu.active {
-    left: 0; /* Desliza para dentro */
-}
-
-.side-menu h2 {
-    color: #b30000;
-    margin-bottom: 15px;
-    font-size: 1.4rem;
-}
-
-.side-menu p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #ddd;
-}
-
-/* Fundo escuro quando o menu abre */
-.overlay-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    z-index: 98;
-}
-
-.overlay-bg.active {
-    display: block;
-}
-
-        /* Reset para ocupar a tela inteira sem sobras */
+        body { -webkit-text-size-adjust: 100%; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         html, body { 
-            height: 100%; /* Força o corpo a ter 100% da altura da janela */
-          /*  background: #000; */
-
-  background: repeating-linear-gradient(
-        45deg,
-        #111,
-        #111 2px,
-        #0d0d0d 2px,
-        #0d0d0d 10px
-    );
-    background-color: #0d0d0d;
-
+            height: 100%; 
+            background: repeating-linear-gradient(45deg, #111, #111 2px, #0d0d0d 2px, #0d0d0d 10px);
+            background-color: #0d0d0d;
             color: #fff; 
             font-family: 'Segoe UI', Roboto, sans-serif; 
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Evita barras de rolagem duplas no Google Sites */
+            overflow: hidden; 
         }
 
-        /* TOPO */
         header { 
             background: #b30000; 
             padding: 12px; 
@@ -113,120 +36,123 @@ body {
         header img { width: 32px; height: 32px; margin-left: 12px;}
         header h1 { font-size: 1.0rem; color: #fff; text-transform: uppercase; font-weight: 600; }
 
-        /* ÁREA CENTRAL: Ocupa todo o espaço restante */
+        .menu-btn {
+            position: absolute;
+            left: 15px;
+            cursor: pointer;
+            z-index: 101;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .menu-btn div { width: 25px; height: 3px; background-color: #fff; transition: 0.3s; }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -100%; 
+            width: 320px; 
+            height: 100%;
+            background: #1a1a1a;
+            z-index: 99;
+            transition: 0.4s;
+            padding: 60px 25px 30px 25px;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .side-menu.active { left: 0; }
+        .side-menu h2 { color: #ff4d4d; margin-bottom: 20px; font-size: 1.4rem; border-bottom: 2px solid #b30000; padding-bottom: 10px; }
+        .side-menu h3 { color: #fff; font-size: 1.0rem; margin-top: 15px; margin-bottom: 5px; }
+        .side-menu p { font-size: 1.0rem; line-height: 1.5; color: #ccc; margin-bottom: 10px; }
+        .side-menu ul { list-style: none; margin-bottom: 15px; }
+        .side-menu li { font-size: 1.0rem; color: #ccc; margin-bottom: 8px; padding-left: 10px; border-left: 3px solid #b30000; }
+
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            z-index: 98;
+        }
+        .overlay-bg.active { display: block; }
+
         main { 
             flex: 1; 
             display: flex; 
-            flex-direction: column; /* Coloca o vídeo em cima e o texto embaixo */
+            flex-direction: column; 
             justify-content: center; 
             align-items: center; 
             padding: 15px;
-            gap: 15px; /* Espaço entre o vídeo e o texto */
+            gap: 15px; 
+        }
+
+        #container-video {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: center;
+            position: relative;
         }
 
         video { 
             width: 100%; 
-            max-width: 1000px;
-            max-height: 70vh; /* Limita a altura para sobrar espaço para o texto */
+            max-height: 70vh; 
             background: #000;
             border: 1px solid #333;
         }
 
-        /* TEXTO ABAIXO DO VÍDEO */
-        .creditos {
+        #aviso-offline {
+            display: none;
+            background: #1a1a1a;
+            border: 2px solid #b30000;
+            padding: 40px 20px;
             text-align: center;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .creditos { text-align: center; font-size: 0.9rem; color: #ccc; }
+        .creditos a { color: #ff4d4d; text-decoration: none; font-weight: bold; }
+
+        footer { background: #b30000; padding: 12px; text-align: center; font-size: 0.85rem; color: #fff; flex-shrink: 0; }
+
+        .clima-container {
+            width: 100%;
+            background: #455A64; 
+            color: #FFFFFF;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 10px 0;
+            font-family: inherit;
             font-size: 0.9rem;
-            color: #ccc;
-        }
-
-        .creditos a {
-            color: #ff4d4d; /* Vermelho mais claro para o link se destacar no preto */
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .creditos a:hover { text-decoration: underline; }
-
-        /* RODAPÉ */
-        footer { 
-         /*   background: #b30000; */
-            background: #b30000;
-            padding: 12px; 
-            text-align: center; 
-            font-size: 0.85rem; 
-            color: #fff; 
             flex-shrink: 0;
+            display: flex;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-/* NOVOS ESTILOS DO MENU - ADICIONE ESTES */
-.menu-btn {
-    position: absolute;
-    left: 15px;
-    cursor: pointer;
-    z-index: 101;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 5px;
-}
+        .clima-wrapper { display: flex; width: fit-content; animation: ticker-loop 20s linear infinite; }
+        .clima-item { margin-right: 80px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; text-transform: uppercase; }
 
-.menu-btn div {
-    width: 25px;
-    height: 3px;
-    background-color: #fff;
-    transition: 0.3s;
-}
+        @keyframes ticker-loop { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-.side-menu {
-    position: fixed;
-    top: 0;
-    left: -100%; 
-    width: 320px; 
-    height: 100%;
-    background: #1a1a1a;
-    z-index: 99;
-    transition: 0.4s;
-    padding: 60px 25px 30px 25px;
-    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-    overflow-y: auto;
-}
-
-.side-menu.active { left: 0; }
-
-.side-menu h2 { color: #ff4d4d; margin-bottom: 20px; font-size: 1.4rem; border-bottom: 2px solid #b30000; padding-bottom: 10px; }
-.side-menu h3 { color: #fff; font-size: 1.0rem; margin-top: 15px; margin-bottom: 5px; }
-.side-menu p { font-size: 1.0rem; line-height: 1.5; color: #ccc; margin-bottom: 10px; }
-.side-menu ul { list-style: none; margin-bottom: 15px; }
-.side-menu li { font-size: 1.0rem; color: #ccc; margin-bottom: 8px; padding-left: 10px; border-left: 3px solid #b30000; }
-
-.overlay-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    z-index: 98;
-}
-.overlay-bg.active { display: block; }
-
-        /* AJUSTES PARA CELULAR DEITADO */
         @media (orientation: landscape) and (max-height: 500px) {
             header, footer { padding: 5px; }
-            header h1 { font-size: 0.9rem; }
             main { padding: 5px; gap: 5px; }
             video { max-height: 55vh; }
-            .creditos { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
-    <header>
+
+<header>
     <div class="menu-btn" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
+        <div></div><div></div><div></div>
     </div>
     <img src="favicon-192.png" alt="Logo">
     <h1>Praia do Cassino ao vivo</h1>
@@ -235,28 +161,28 @@ body {
 <div class="overlay-bg" onclick="toggleMenu()"></div>
 <nav class="side-menu" id="sideMenu">
     <h2>Sobre a Praia do Cassino</h2>
-    
-    <p>Localizada em Rio Grande/RS, é considerada a <strong>maior praia em extensão do mundo</strong>, com mais de 220 km de faixa contínua de areia, indo até o Chuí.</p>
-
+    <p>Localizada em Rio Grande/RS, é considerada a <strong>maior praia em extensão do mundo</strong>.</p>
     <h3>Principais Atrações:</h3>
-    
     <ul>
-        <li><strong>Molhes da Barra:</strong> Engenharia com 4,5 km mar adentro. Passeios de vagoneta e avistamento de lobos-marinhos.</li>
-        <li><strong>Navio Altair:</strong> Naufrágio histórico de 1976, localizado a 21 km dos Molhes.</li>
-        <li><strong>Infraestrutura:</strong> Balneário mais antigo do Brasil, com destaque para a Avenida Rio Grande.</li>
-        <li><strong>Natureza:</strong> Vasta faixa de areia ideal para esportes, caminhadas e circulação de carros.</li>
+        <li><strong>Molhes da Barra:</strong> Engenharia com 4,5 km mar adentro.</li>
+        <li><strong>Navio Altair:</strong> Naufrágio histórico de 1976.</li>
+        <li><strong>Natureza:</strong> Vasta faixa de areia ideal para esportes.</li>
     </ul>
-
-    <p style="font-size: 0.9rem; color: #888; margin-top: 20px;">
-        Fonte: Informações turísticas de Rio Grande/RS.
-    </p>
 </nav>
-    <main>
-        <video id="video" controls autoplay muted playsinline></video>
-        <div class="creditos">
-            <p>Imagens fornecidas por <a href="https://surfkssino.com" target="_blank">surfkssino.com</a></p>
+
+<main>
+    <div id="container-video">
+        <video id="video" controls autoplay muted playsinline preload="auto"></video>
+        <div id="aviso-offline">
+            <h2 style="color: #ff4d4d;">⚠️ Câmera Offline</h2>
+            <p style="color: #ccc; margin-top: 10px;">O sinal desta câmera está temporariamente indisponível.</p>
+            <button onclick="location.reload()" style="margin-top:15px; padding:8px 15px; background:#b30000; color:#fff; border:none; border-radius:4px; cursor:pointer;">Atualizar Página</button>
         </div>
-    </main>
+    </div>
+    <div class="creditos">
+        <p>Imagens fornecidas por <a href="https://surfkssino.com" target="_blank">surfkssino.com</a></p>
+    </div>
+</main>
 
 <div class="clima-container">
     <div class="clima-wrapper">
@@ -265,141 +191,110 @@ body {
     </div>
 </div>
 
-<style>
-    .clima-container {
-        width: 100%;
-        background: #455A64; 
-        color: #FFFFFF;
-        overflow: hidden;
-        white-space: nowrap;
-        padding: 10px 0;
-        font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-        font-size: 0.9rem;
-        flex-shrink: 0;
-        display: flex;
-        border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .clima-wrapper {
-        display: flex;
-        width: fit-content;
-        /* Diminuído para 20s para o movimento ficar mais rápido */
-        animation: ticker-loop 20s linear infinite;
-    }
-
-    .clima-ticker {
-        display: flex;
-        flex-shrink: 0;
-    }
-
-    .clima-item {
-        margin-right: 80px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-
-    @keyframes ticker-loop {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-</style>
+<footer>
+    &copy; 2026 ManyGAMEs - <a href="https://www.manygames.com.br" style="color: #fff; text-decoration: none;">www.manygames.com.br</a>
+</footer>
 
 <script>
+    const video = document.getElementById('video');
+    const aviso = document.getElementById('aviso-offline');
+    // Cache buster para o TXT do GitHub
+    const txtUrl = "https://raw.githubusercontent.com/ManyG4MEs/kssino/main/link.txt?t=" + Date.now();
+
+    async function validarELoad() {
+        try {
+            const res = await fetch(txtUrl);
+            const urlRaw = await res.text();
+            let streamUrl = urlRaw.trim();
+
+            if (!streamUrl.includes('m3u8')) throw new Error("Link inválido");
+
+            // Cache buster agressivo para o link do vídeo
+            const separator = streamUrl.includes('?') ? '&' : '?';
+            const finalStreamUrl = streamUrl + `${separator}nocache=${Date.now()}`;
+
+            if (Hls.isSupported()) {
+                const hls = new Hls({
+                    manifestLoadingMaxRetry: 10,
+                    manifestLoadingRetryDelay: 1000,
+                    enableWorker: true
+                });
+
+                hls.loadSource(finalStreamUrl);
+                hls.attachMedia(video);
+                
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.muted = true; // Garante silêncio para o autoplay não quebrar
+                    video.play().catch(e => console.log("Play aguardando interação"));
+                });
+
+                hls.on(Hls.Events.ERROR, function (event, data) {
+                    if (data.fatal) {
+                        switch (data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR:
+                                // Tenta recuperar erro de rede uma vez, se falhar, mostra offline
+                                hls.startLoad();
+                                break;
+                            case Hls.ErrorTypes.MEDIA_ERROR:
+                                hls.recoverMediaError();
+                                break;
+                            default:
+                                video.style.display = 'none';
+                                aviso.style.display = 'block';
+                                hls.destroy();
+                                break;
+                        }
+                    }
+                });
+
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Suporte nativo (iOS/Safari)
+                video.src = finalStreamUrl;
+                video.muted = true;
+                video.play().catch(() => {});
+            }
+        } catch (e) {
+            console.error("Erro ao carregar stream:", e);
+            video.style.display = 'none';
+            aviso.style.display = 'block';
+        }
+    }
+
+    validarELoad();
+
+    // Script do Clima
     async function atualizarClima() {
         const apiKey = '936224fc4d0527d53efee60f3396cf85';
         const url = `https://api.openweathermap.org/data/2.5/weather?id=3451138&units=metric&lang=pt_br&appid=${apiKey}`;
-
         try {
             const response = await fetch(url);
             const data = await response.json();
-
             if (response.ok) {
                 const temp = Math.round(data.main.temp);
                 const desc = data.weather[0].description.toUpperCase();
                 const umidade = data.main.humidity;
                 const vento = Math.round(data.wind.speed * 3.6);
-
-                const conteudo = `
-                    <span class="clima-item">📍 RIO GRANDE: ${temp}°C</span>
-                    <span class="clima-item">☁️ CONDIÇÃO: ${desc}</span>
-                    <span class="clima-item">💧 UMIDADE: ${umidade}%</span>
-                    <span class="clima-item">🌬️ VENTO: ${vento} KM/H</span>
-                `;
-
+                const conteudo = `<span class="clima-item">📍 RIO GRANDE: ${temp}°C</span><span class="clima-item">☁️ CONDIÇÃO: ${desc}</span><span class="clima-item">💧 UMIDADE: ${umidade}%</span><span class="clima-item">🌬️ VENTO: ${vento} KM/H</span>`;
                 document.getElementById('ticker-clima-1').innerHTML = conteudo;
                 document.getElementById('ticker-clima-2').innerHTML = conteudo;
             }
-        } catch (e) { console.error("Erro clima"); }
+        } catch (e) {}
     }
-
     atualizarClima();
     setInterval(atualizarClima, 900000);
-</script>
 
-<!--
-<div id="ww_f1f7ef4040624" v='1.3' loc='id' a='{"t":"ticker","lang":"pt","sl_lpl":1,"ids":["wl4986"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"#455A64","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>Mais previsões: <a href="https://tempolongo.com/rio_de_janeiro_tempo_25_dias/" id="ww_f1f7ef4040624_u" target="_blank">Rio de Janeiro 30 days weather forecast</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_f1f7ef4040624"></script> 
--->
-
-    <footer>
-        &copy; 2026 ManyGAMEs - <a href="https://www.manygames.com.br" style="color: #fff; text-decoration: none;">www.manygames.com.br</a>
-    </footer>
-
-    <script>
-        const video = document.getElementById('video');
-        const txtUrl = "https://raw.githubusercontent.com/ManyG4MEs/kssino/main/link.txt?t=" + new Date().getTime();
-
-        fetch(txtUrl)
-            .then(res => res.text())
-            .then(url => {
-                const streamUrl = url.trim();
-                if (Hls.isSupported()) {
-                    const hls = new Hls();
-                    hls.loadSource(streamUrl);
-                    hls.attachMedia(video);
-                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = streamUrl;
-                }
-            })
-            .catch(err => console.error("Erro ao carregar stream:", err));
-    </script>
-<script>
-  // Função para ativar o tela cheia no elemento de vídeo
-  function enterFullScreen(videoElement) {
-    if (videoElement.requestFullscreen) {
-      videoElement.requestFullscreen();
-    } else if (videoElement.webkitRequestFullscreen) { // Safari/iOS
-      videoElement.webkitRequestFullscreen();
-    } else if (videoElement.msRequestFullscreen) { // IE11
-      videoElement.msRequestFullscreen();
-    }
-  }
-
-  // Detecta mudança na orientação do dispositivo
-  window.addEventListener("orientationchange", function() {
-    const video = document.querySelector("video"); // Seleciona o seu vídeo
-    
-    // Se a orientação for 'landscape' (horizontal)
-    if (window.orientation === 90 || window.orientation === -90) {
-      if (video) {
-        enterFullScreen(video);
-      }
-    } else {
-      // Se voltar para a vertical, sai do fullscreen (opcional)
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-    }
-  });
-</script>
-<script>
     function toggleMenu() {
         document.getElementById('sideMenu').classList.toggle('active');
         document.querySelector('.overlay-bg').classList.toggle('active');
     }
+
+    // Fullscreen automático na rotação
+    window.addEventListener("orientationchange", function() {
+        if (window.orientation === 90 || window.orientation === -90) {
+            if (video.requestFullscreen) video.requestFullscreen();
+            else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+        }
+    });
 </script>
 </body>
 </html>
-
