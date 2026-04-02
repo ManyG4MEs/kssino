@@ -8,34 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         body { -webkit-text-size-adjust: 100%; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html, body { 
-            height: 100%; 
-            background: repeating-linear-gradient(45deg, #111, #111 2px, #0d0d0d 2px, #0d0d0d 10px);
-            background-color: #0d0d0d;
-            color: #fff; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; 
-        }
 
-        header { 
-            background: #b30000; 
-            padding: 12px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            flex-shrink: 0;
-            z-index: 10;
-        }
-        
-        header img { width: 32px; height: 32px; margin-left: 12px;}
-        header h1 { font-size: 1.0rem; color: #fff; text-transform: uppercase; font-weight: 600; }
-
+        /* --- ESTILOS DO MENU --- */
         .menu-btn {
             position: absolute;
             left: 15px;
@@ -47,7 +21,12 @@
             padding: 5px;
         }
 
-        .menu-btn div { width: 25px; height: 3px; background-color: #fff; transition: 0.3s; }
+        .menu-btn div {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            transition: 0.3s;
+        }
 
         .side-menu {
             position: fixed;
@@ -82,6 +61,37 @@
         }
         .overlay-bg.active { display: block; }
 
+        /* Reset para ocupar a tela inteira sem sobras */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body { 
+            height: 100%; 
+            background: repeating-linear-gradient(45deg, #111, #111 2px, #0d0d0d 2px, #0d0d0d 10px);
+            background-color: #0d0d0d;
+            color: #fff; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+
+        /* TOPO */
+        header { 
+            background: #b30000; 
+            padding: 12px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+        
+        header img { width: 32px; height: 32px; margin-left: 12px;}
+        header h1 { font-size: 1.0rem; color: #fff; text-transform: uppercase; font-weight: 600; }
+
+        /* ÁREA CENTRAL */
         main { 
             flex: 1; 
             display: flex; 
@@ -89,15 +99,15 @@
             justify-content: center; 
             align-items: center; 
             padding: 15px;
-            gap: 15px; 
+            gap: 10px; 
         }
 
         #container-video {
             width: 100%;
             max-width: 1000px;
             display: flex;
-            justify-content: center;
-            position: relative;
+            flex-direction: column;
+            align-items: center;
         }
 
         video { 
@@ -107,21 +117,42 @@
             border: 1px solid #333;
         }
 
+        /* --- NOVOS ESTILOS DE ERRO E SUPORTE --- */
         #aviso-offline {
             display: none;
             background: #1a1a1a;
-            border: 2px solid #b30000;
-            padding: 40px 20px;
+            border: 1px solid #b30000;
+            padding: 25px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 4px;
             width: 100%;
         }
+        #btn-instagram {
+            display: none;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 8px;
+        }
+        .btn-acao {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-align: center;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-suporte { background: #333; color: #fff; border: 1px solid #444; margin-top: 10px; }
+        .btn-reconexao { background: #b30000; color: #fff; margin-top: 10px; }
 
-        .creditos { text-align: center; font-size: 0.9rem; color: #ccc; }
+        .creditos { text-align: center; font-size: 0.9rem; color: #ccc; margin-top: 10px; }
         .creditos a { color: #ff4d4d; text-decoration: none; font-weight: bold; }
 
-        footer { background: #b30000; padding: 12px; text-align: center; font-size: 0.85rem; color: #fff; flex-shrink: 0; }
-
+        /* RODAPÉ E CLIMA */
         .clima-container {
             width: 100%;
             background: #455A64; 
@@ -129,22 +160,25 @@
             overflow: hidden;
             white-space: nowrap;
             padding: 10px 0;
-            font-family: inherit;
             font-size: 0.9rem;
             flex-shrink: 0;
             display: flex;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-
         .clima-wrapper { display: flex; width: fit-content; animation: ticker-loop 20s linear infinite; }
         .clima-item { margin-right: 80px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; text-transform: uppercase; }
-
         @keyframes ticker-loop { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+        footer { background: #b30000; padding: 12px; text-align: center; font-size: 0.85rem; color: #fff; flex-shrink: 0; }
+
+        /* AJUSTES LANDSCAPE */
         @media (orientation: landscape) and (max-height: 500px) {
             header, footer { padding: 5px; }
+            header h1 { font-size: 0.9rem; }
             main { padding: 5px; gap: 5px; }
             video { max-height: 55vh; }
+            .creditos { font-size: 0.75rem; }
+            .clima-container { padding: 6px 0; }
         }
     </style>
 </head>
@@ -161,26 +195,37 @@
 <div class="overlay-bg" onclick="toggleMenu()"></div>
 <nav class="side-menu" id="sideMenu">
     <h2>Sobre a Praia do Cassino</h2>
-    <p>Localizada em Rio Grande/RS, é considerada a <strong>maior praia em extensão do mundo</strong>.</p>
+    <p>Localizada em Rio Grande/RS, é considerada a <strong>maior praia em extensão do mundo</strong>, com mais de 220 km de faixa contínua de areia, indo até o Chuí.</p>
     <h3>Principais Atrações:</h3>
     <ul>
-        <li><strong>Molhes da Barra:</strong> Engenharia com 4,5 km mar adentro.</li>
-        <li><strong>Navio Altair:</strong> Naufrágio histórico de 1976.</li>
-        <li><strong>Natureza:</strong> Vasta faixa de areia ideal para esportes.</li>
+        <li><strong>Molhes da Barra:</strong> Engenharia com 4,5 km mar adentro. Passeios de vagoneta e avistamento de lobos-marinhos.</li>
+        <li><strong>Navio Altair:</strong> Naufrágio histórico de 1976, localizado a 21 km dos Molhes.</li>
+        <li><strong>Infraestrutura:</strong> Balneário mais antigo do Brasil, com destaque para a Avenida Rio Grande.</li>
+        <li><strong>Natureza:</strong> Vasta faixa de areia ideal para esportes, caminhadas e circulação de carros.</li>
     </ul>
+    <p style="font-size: 0.9rem; color: #888; margin-top: 20px;">Fonte: Informações turísticas de Rio Grande/RS.</p>
 </nav>
 
 <main>
+    <div id="btn-instagram">
+        <a href="https://g3.ipcamlive.com/player/player.php?alias=69c282bb706bd" target="_blank" class="btn-acao btn-suporte">
+            Problemas ao carregar? Abrir player externo
+        </a>
+    </div>
+
     <div id="container-video">
-        <video id="video" controls autoplay muted playsinline preload="auto"></video>
+        <video id="video" controls autoplay muted playsinline></video>
+        
         <div id="aviso-offline">
-            <h2 style="color: #ff4d4d;">⚠️ Câmera Offline</h2>
-            <p style="color: #ccc; margin-top: 10px;">O sinal desta câmera está temporariamente indisponível.</p>
-            <button onclick="location.reload()" style="margin-top:15px; padding:8px 15px; background:#b30000; color:#fff; border:none; border-radius:4px; cursor:pointer;">Atualizar Página</button>
+            <h2 style="color: #ff4d4d; font-size: 1.1rem; text-transform: uppercase;">Câmera Indisponível</h2>
+            <p style="color: #999; margin-top: 5px; font-size: 0.9rem;">O sinal de origem está offline ou com instabilidade.</p>
+            <a href="https://g3.ipcamlive.com/player/player.php?alias=69c282bb706bd" target="_blank" class="btn-acao btn-suporte">Abrir Link Alternativo</a>
+            <button onclick="location.reload()" class="btn-acao btn-reconexao">Tentar Novamente</button>
         </div>
     </div>
+
     <div class="creditos">
-        <p>Imagens fornecidas por <a href="https://surfkssino.com" target="_blank">surfkssino.com</a></p>
+        <p>Fonte: <a href="https://surfkssino.com" target="_blank">surfkssino.com</a></p>
     </div>
 </main>
 
@@ -198,71 +243,47 @@
 <script>
     const video = document.getElementById('video');
     const aviso = document.getElementById('aviso-offline');
-    // Cache buster para o TXT do GitHub
-    const txtUrl = "https://raw.githubusercontent.com/ManyG4MEs/kssino/main/link.txt?t=" + Date.now();
+    const btnInsta = document.getElementById('btn-instagram');
+    const txtUrl = "https://raw.githubusercontent.com/ManyG4MEs/kssino/main/link.txt?t=" + new Date().getTime();
 
-    async function validarELoad() {
+    // Detecta se está no navegador do Instagram
+    function detectarInstagram() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        if (/Instagram|FBAN|FBAV/i.test(ua)) {
+            btnInsta.style.display = 'block';
+        }
+    }
+
+    async function carregarStream() {
+        detectarInstagram();
         try {
             const res = await fetch(txtUrl);
             const urlRaw = await res.text();
-            let streamUrl = urlRaw.trim();
-
-            if (!streamUrl.includes('m3u8')) throw new Error("Link inválido");
-
-            // Cache buster agressivo para o link do vídeo
-            const separator = streamUrl.includes('?') ? '&' : '?';
-            const finalStreamUrl = streamUrl + `${separator}nocache=${Date.now()}`;
+            const streamUrl = urlRaw.trim();
 
             if (Hls.isSupported()) {
-                const hls = new Hls({
-                    manifestLoadingMaxRetry: 10,
-                    manifestLoadingRetryDelay: 1000,
-                    enableWorker: true
-                });
-
-                hls.loadSource(finalStreamUrl);
+                const hls = new Hls({ manifestLoadingMaxRetry: 5 });
+                hls.loadSource(streamUrl);
                 hls.attachMedia(video);
                 
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.muted = true; // Garante silêncio para o autoplay não quebrar
-                    video.play().catch(e => console.log("Play aguardando interação"));
-                });
-
                 hls.on(Hls.Events.ERROR, function (event, data) {
                     if (data.fatal) {
-                        switch (data.type) {
-                            case Hls.ErrorTypes.NETWORK_ERROR:
-                                // Tenta recuperar erro de rede uma vez, se falhar, mostra offline
-                                hls.startLoad();
-                                break;
-                            case Hls.ErrorTypes.MEDIA_ERROR:
-                                hls.recoverMediaError();
-                                break;
-                            default:
-                                video.style.display = 'none';
-                                aviso.style.display = 'block';
-                                hls.destroy();
-                                break;
-                        }
+                        video.style.display = 'none';
+                        aviso.style.display = 'block';
                     }
                 });
-
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                // Suporte nativo (iOS/Safari)
-                video.src = finalStreamUrl;
-                video.muted = true;
-                video.play().catch(() => {});
+                video.src = streamUrl;
             }
-        } catch (e) {
-            console.error("Erro ao carregar stream:", e);
+        } catch (err) {
             video.style.display = 'none';
             aviso.style.display = 'block';
         }
     }
 
-    validarELoad();
+    carregarStream();
 
-    // Script do Clima
+    // Funções de Clima (Mantive seus emojis e lógica)
     async function atualizarClima() {
         const apiKey = '936224fc4d0527d53efee60f3396cf85';
         const url = `https://api.openweathermap.org/data/2.5/weather?id=3451138&units=metric&lang=pt_br&appid=${apiKey}`;
@@ -274,7 +295,12 @@
                 const desc = data.weather[0].description.toUpperCase();
                 const umidade = data.main.humidity;
                 const vento = Math.round(data.wind.speed * 3.6);
-                const conteudo = `<span class="clima-item">📍 RIO GRANDE: ${temp}°C</span><span class="clima-item">☁️ CONDIÇÃO: ${desc}</span><span class="clima-item">💧 UMIDADE: ${umidade}%</span><span class="clima-item">🌬️ VENTO: ${vento} KM/H</span>`;
+                const conteudo = `
+                    <span class="clima-item">📍 RIO GRANDE: ${temp}°C</span>
+                    <span class="clima-item">☁️ CONDIÇÃO: ${desc}</span>
+                    <span class="clima-item">💧 UMIDADE: ${umidade}%</span>
+                    <span class="clima-item">🌬️ VENTO: ${vento} KM/H</span>
+                `;
                 document.getElementById('ticker-clima-1').innerHTML = conteudo;
                 document.getElementById('ticker-clima-2').innerHTML = conteudo;
             }
@@ -283,18 +309,18 @@
     atualizarClima();
     setInterval(atualizarClima, 900000);
 
-    function toggleMenu() {
-        document.getElementById('sideMenu').classList.toggle('active');
-        document.querySelector('.overlay-bg').classList.toggle('active');
-    }
-
-    // Fullscreen automático na rotação
+    // Fullscreen na rotação (Seu código original)
     window.addEventListener("orientationchange", function() {
         if (window.orientation === 90 || window.orientation === -90) {
             if (video.requestFullscreen) video.requestFullscreen();
             else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
         }
     });
+
+    function toggleMenu() {
+        document.getElementById('sideMenu').classList.toggle('active');
+        document.querySelector('.overlay-bg').classList.toggle('active');
+    }
 </script>
 </body>
 </html>
