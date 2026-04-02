@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ManyGames - Cassino ao vivo</title>
+    <title>ManyGAMEs - Câmera ao Vivo Praia do Cassino - Rio Grande/RS</title>
+    <meta name="description" content="Acompanhe a Praia do Cassino ao vivo em tempo real. Veja as condições do mar, clima e movimento na maior praia do mundo em Rio Grande/RS.">
+    <meta name="keywords" content="Praia do Cassino, Rio Grande RS, Câmera ao vivo, ManyGAMEs, Surf Cassino, Tempo Real, Maior Praia do Mundo">
+    <meta name="author" content="ManyGAMEs">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ManyGAMEs - Praia do Cassino Ao Vivo">
+    <meta property="og:description" content="Monitoramento em tempo real da Praia do Cassino. Veja o clima e o mar agora!">
+    <meta property="og:image" content="https://www.manygames.com.br/favicon-192.png"> 
+    <meta property="og:url" content="https://www.manygames.com.br">
+    <link rel="canonical" href="https://www.manygames.com.br">
     <link rel="icon" href="favicon-192.png">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
@@ -61,7 +71,6 @@
         }
         .overlay-bg.active { display: block; }
 
-        /* Reset para ocupar a tela inteira sem sobras */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         html, body { 
@@ -75,7 +84,6 @@
             overflow: hidden; 
         }
 
-        /* TOPO */
         header { 
             background: #b30000; 
             padding: 12px; 
@@ -91,7 +99,6 @@
         header img { width: 32px; height: 32px; margin-left: 12px;}
         header h1 { font-size: 1.0rem; color: #fff; text-transform: uppercase; font-weight: 600; }
 
-        /* ÁREA CENTRAL */
         main { 
             flex: 1; 
             display: flex; 
@@ -117,7 +124,6 @@
             border: 1px solid #333;
         }
 
-        /* --- NOVOS ESTILOS DE ERRO E SUPORTE --- */
         #aviso-offline {
             display: none;
             background: #1a1a1a;
@@ -152,7 +158,6 @@
         .creditos { text-align: center; font-size: 0.9rem; color: #ccc; margin-top: 4px; }
         .creditos a { color: #ff4d4d; text-decoration: none; font-weight: bold; }
 
-        /* RODAPÉ E CLIMA */
         .clima-container {
             width: 100%;
             background: #455A64; 
@@ -171,7 +176,6 @@
 
         footer { background: #b30000; padding: 12px; text-align: center; font-size: 0.85rem; color: #fff; flex-shrink: 0; }
 
-        /* AJUSTES LANDSCAPE */
         @media (orientation: landscape) and (max-height: 500px) {
             header, footer { padding: 5px; }
             header h1 { font-size: 0.9rem; }
@@ -181,33 +185,23 @@
             .clima-container { padding: 6px 0; }
         }
 
-/* 1. Estilo base do aviso (invisível por padrão para computadores) */
-#dica-fullscreen {
-    display: none;
-    font-size: 0.75rem;
-    color: #888;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    text-align: center;
-    width: 100%;
-}
+        #dica-fullscreen {
+            display: none;
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            text-align: center;
+            width: 100%;
+        }
 
-/* 2. Aparece apenas em dispositivos com tela de toque (celulares/tablets) 
-      e apenas quando estiverem em pé (Portrait) */
-@media (pointer: coarse) and (orientation: portrait) {
-    #dica-fullscreen {
-        display: block;
-    }
-}
+        @media (pointer: coarse) and (orientation: portrait) {
+            #dica-fullscreen { display: block; }
+        }
 
-/* 3. Garante que desapareça em modo deitado (Landscape), 
-      mesmo que seja um tablet ou celular com toque */
-@media (orientation: landscape) {
-    #dica-fullscreen {
-        display: none !important;
-    }
-}
-
+        @media (orientation: landscape) {
+            #dica-fullscreen { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -217,7 +211,7 @@
         <div></div><div></div><div></div>
     </div>
     <img src="favicon-192.png" alt="Logo">
-    <h1>Praia do Cassino ao vivo</h1>
+    <h1>Praia do Cassino</h1>
 </header>
 
 <div class="overlay-bg" onclick="toggleMenu()"></div>
@@ -235,7 +229,7 @@
 </nav>
 
 <main>
-<div id="dica-fullscreen">Dica: Toque na tela antes de girar</div>
+    <div id="dica-fullscreen">Dica: Toque na tela antes de girar</div>
     <div id="btn-instagram">
         <a href="https://g3.ipcamlive.com/player/player.php?alias=69c282bb706bd" target="_blank" class="btn-acao btn-suporte">
             Problemas ao carregar? Abrir player externo
@@ -244,7 +238,6 @@
 
     <div id="container-video">
         <video id="video" controls autoplay muted playsinline></video>
-        
         <div id="aviso-offline">
             <h2 style="color: #ff4d4d; font-size: 1.1rem; text-transform: uppercase;">Câmera Indisponível</h2>
             <p style="color: #999; margin-top: 5px; font-size: 0.9rem;">O sinal de origem está offline ou com instabilidade.</p>
@@ -275,32 +268,22 @@
     const btnInsta = document.getElementById('btn-instagram');
     const txtUrl = "https://raw.githubusercontent.com/ManyG4MEs/kssino/main/link.txt?t=" + new Date().getTime();
 
-    // Detecta se está no navegador do Instagram
     function detectarInstagram() {
         const ua = navigator.userAgent || navigator.vendor || window.opera;
-        if (/Instagram|FBAN|FBAV/i.test(ua)) {
-            btnInsta.style.display = 'block';
-        }
+        if (/Instagram|FBAN|FBAV/i.test(ua)) btnInsta.style.display = 'block';
     }
 
     async function carregarStream() {
         detectarInstagram();
         try {
             const res = await fetch(txtUrl);
-            const urlRaw = await res.text();
-            const streamUrl = urlRaw.trim();
+            const streamUrl = (await res.text()).trim();
 
             if (Hls.isSupported()) {
                 const hls = new Hls({ manifestLoadingMaxRetry: 5 });
                 hls.loadSource(streamUrl);
                 hls.attachMedia(video);
-                
-                hls.on(Hls.Events.ERROR, function (event, data) {
-                    if (data.fatal) {
-                        video.style.display = 'none';
-                        aviso.style.display = 'block';
-                    }
-                });
+                hls.on(Hls.Events.ERROR, (e, d) => { if (d.fatal) { video.style.display = 'none'; aviso.style.display = 'block'; }});
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = streamUrl;
             }
@@ -309,26 +292,19 @@
             aviso.style.display = 'block';
         }
     }
-
     carregarStream();
 
-    // Funções de Clima (Mantive seus emojis e lógica)
     async function atualizarClima() {
-        const apiKey = '936224fc4d0527d53efee60f3396cf85';
-        const url = `https://api.openweathermap.org/data/2.5/weather?id=3451138&units=metric&lang=pt_br&appid=${apiKey}`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?id=3451138&units=metric&lang=pt_br&appid=936224fc4d0527d53efee60f3396cf85`;
         try {
             const response = await fetch(url);
             const data = await response.json();
             if (response.ok) {
-                const temp = Math.round(data.main.temp);
-                const desc = data.weather[0].description.toUpperCase();
-                const umidade = data.main.humidity;
-                const vento = Math.round(data.wind.speed * 3.6);
                 const conteudo = `
-                    <span class="clima-item">📍 RIO GRANDE: ${temp}°C</span>
-                    <span class="clima-item">☁️ CONDIÇÃO: ${desc}</span>
-                    <span class="clima-item">💧 UMIDADE: ${umidade}%</span>
-                    <span class="clima-item">🌬️ VENTO: ${vento} KM/H</span>
+                    <span class="clima-item">📍 RIO GRANDE: ${Math.round(data.main.temp)}°C</span>
+                    <span class="clima-item">☁️ CONDIÇÃO: ${data.weather[0].description.toUpperCase()}</span>
+                    <span class="clima-item">💧 UMIDADE: ${data.main.humidity}%</span>
+                    <span class="clima-item">🌬️ VENTO: ${Math.round(data.wind.speed * 3.6)} KM/H</span>
                 `;
                 document.getElementById('ticker-clima-1').innerHTML = conteudo;
                 document.getElementById('ticker-clima-2').innerHTML = conteudo;
@@ -338,45 +314,38 @@
     atualizarClima();
     setInterval(atualizarClima, 900000);
 
-/*
-    // Fullscreen na rotação (Seu código original)
+    // --- LÓGICA DE FULLSCREEN CORRIGIDA ---
+    function alternarFullScreen(ligar) {
+        const videoAlvo = document.getElementById('video');
+        
+        if (ligar) {
+            // Entrar em Fullscreen (Alvo: Vídeo)
+            if (videoAlvo.requestFullscreen) videoAlvo.requestFullscreen();
+            else if (videoAlvo.webkitRequestFullscreen) videoAlvo.webkitRequestFullscreen();
+            else if (videoAlvo.msRequestFullscreen) videoAlvo.msRequestFullscreen();
+        } else {
+            // Sair de Fullscreen (Alvo sempre é o DOCUMENT)
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            }
+        }
+    }
+
     window.addEventListener("orientationchange", function() {
         if (window.orientation === 90 || window.orientation === -90) {
-            if (video.requestFullscreen) video.requestFullscreen();
-            else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+            alternarFullScreen(true);
+        } else {
+            alternarFullScreen(false);
         }
     });
-*/
 
-  // Função para ativar o tela cheia no DOCUMENTO INTEIRO (esconde a barra do navegador)
-  function entrarTelaCheia() {
-    const videoAlvo = document.getElementById('video');
-    const siteAlvo = document.documentElement;
-    const docEl = videoAlvo; // Pega a escolha
-
-    if (docEl.requestFullscreen) {
-      docEl.requestFullscreen();
-    } else if (docEl.webkitRequestFullscreen) { // Safari/iOS
-      docEl.webkitRequestFullscreen();
-    } else if (docEl.msRequestFullscreen) { // IE11
-      docEl.msRequestFullscreen();
-    }
-  }
-
-  // Detecta mudança na orientação do dispositivo
-  window.addEventListener("orientationchange", function() {
-    // Se a orientação for 'landscape' (horizontal)
-    if (window.orientation === 90 || window.orientation === -90) {
-      entrarTelaCheia();
-    } else {
-      // Opcional: sai do fullscreen ao voltar para a vertical
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
-    }
-  });
+    // Toque para validar permissão no mobile
+    video.addEventListener('click', () => {
+        if (window.orientation === 90 || window.orientation === -90) {
+            alternarFullScreen(true);
+        }
+    });
 
     function toggleMenu() {
         document.getElementById('sideMenu').classList.toggle('active');
