@@ -149,7 +149,7 @@
         .btn-suporte { background: #333; color: #fff; border: 1px solid #444; margin-top: 10px; }
         .btn-reconexao { background: #b30000; color: #fff; margin-top: 10px; }
 
-        .creditos { text-align: center; font-size: 0.9rem; color: #ccc; margin-top: 10px; }
+        .creditos { text-align: center; font-size: 0.9rem; color: #ccc; margin-top: 4px; }
         .creditos a { color: #ff4d4d; text-decoration: none; font-weight: bold; }
 
         /* RODAPÉ E CLIMA */
@@ -180,6 +180,34 @@
             .creditos { font-size: 0.75rem; }
             .clima-container { padding: 6px 0; }
         }
+
+/* 1. Estilo base do aviso (invisível por padrão para computadores) */
+#dica-fullscreen {
+    display: none;
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+}
+
+/* 2. Aparece apenas em dispositivos com tela de toque (celulares/tablets) 
+      e apenas quando estiverem em pé (Portrait) */
+@media (pointer: coarse) and (orientation: portrait) {
+    #dica-fullscreen {
+        display: block;
+    }
+}
+
+/* 3. Garante que desapareça em modo deitado (Landscape), 
+      mesmo que seja um tablet ou celular com toque */
+@media (orientation: landscape) {
+    #dica-fullscreen {
+        display: none !important;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -207,6 +235,7 @@
 </nav>
 
 <main>
+<div id="dica-fullscreen">Dica: Toque na tela antes de girar</div>
     <div id="btn-instagram">
         <a href="https://g3.ipcamlive.com/player/player.php?alias=69c282bb706bd" target="_blank" class="btn-acao btn-suporte">
             Problemas ao carregar? Abrir player externo
@@ -309,6 +338,7 @@
     atualizarClima();
     setInterval(atualizarClima, 900000);
 
+/*
     // Fullscreen na rotação (Seu código original)
     window.addEventListener("orientationchange", function() {
         if (window.orientation === 90 || window.orientation === -90) {
@@ -316,6 +346,37 @@
             else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
         }
     });
+*/
+
+  // Função para ativar o tela cheia no DOCUMENTO INTEIRO (esconde a barra do navegador)
+  function entrarTelaCheia() {
+    const videoAlvo = document.getElementById('video');
+    const siteAlvo = document.documentElement;
+    const docEl = videoAlvo; // Pega a escolha
+
+    if (docEl.requestFullscreen) {
+      docEl.requestFullscreen();
+    } else if (docEl.webkitRequestFullscreen) { // Safari/iOS
+      docEl.webkitRequestFullscreen();
+    } else if (docEl.msRequestFullscreen) { // IE11
+      docEl.msRequestFullscreen();
+    }
+  }
+
+  // Detecta mudança na orientação do dispositivo
+  window.addEventListener("orientationchange", function() {
+    // Se a orientação for 'landscape' (horizontal)
+    if (window.orientation === 90 || window.orientation === -90) {
+      entrarTelaCheia();
+    } else {
+      // Opcional: sai do fullscreen ao voltar para a vertical
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+  });
 
     function toggleMenu() {
         document.getElementById('sideMenu').classList.toggle('active');
