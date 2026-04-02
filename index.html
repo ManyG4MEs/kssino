@@ -102,30 +102,33 @@
             flex: 1; 
             display: flex; 
             flex-direction: column; 
-            justify-content: center; 
+            justify-content: space-between; /* Distribui os itens para ocupar o espaço */
             align-items: center; 
-            padding: 15px;
-            gap: 10px; 
+            padding: 10px 15px;
+            gap: 5px; 
         }
 
         #container-video {
             width: 100%;
             max-width: 1000px;
-            /* Mantém a proporção 16:9 do player externo */
-            aspect-ratio: 16 / 9;
+            flex-grow: 1; /* Faz o vídeo crescer para ocupar o espaço vazio */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: #000;
             border: 1px solid #333;
             position: relative;
         }
 
-        /* Estilo para o Iframe ocupar todo o container */
+        /* O vídeo vai se ajustar ao container, mantendo a proporção */
         #player-externo {
             width: 100%;
             height: 100%;
+            max-height: 70vh; /* Não deixa o vídeo ficar alto demais e esconder o resto */
             border: none;
         }
 
-        .creditos { text-align: center; font-size: 0.9rem; color: #ccc; margin-top: 4px; }
+        .creditos { text-align: center; font-size: 0.85rem; color: #ccc; padding-bottom: 5px; }
         .creditos a { color: #ff4d4d; text-decoration: none; font-weight: bold; }
 
         .clima-container {
@@ -144,15 +147,14 @@
         .clima-item { margin-right: 80px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; text-transform: uppercase; }
         @keyframes ticker-loop { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        footer { background: #b30000; padding: 12px; text-align: center; font-size: 0.85rem; color: #fff; flex-shrink: 0; }
+        footer { background: #b30000; padding: 10px; text-align: center; font-size: 0.8rem; color: #fff; flex-shrink: 0; }
 
         @media (orientation: landscape) and (max-height: 500px) {
             header, footer { padding: 5px; }
             header h1 { font-size: 0.9rem; }
-            main { padding: 5px; gap: 5px; }
-            #container-video { max-height: 75vh; }
-            .creditos { font-size: 0.75rem; }
-            .clima-container { padding: 6px 0; }
+            main { padding: 5px; gap: 2px; }
+            #container-video { flex-grow: 1; }
+            .creditos { display: none; } /* Esconde créditos no modo deitado para ganhar espaço */
         }
     </style>
 </head>
@@ -163,7 +165,7 @@
         <div></div><div></div><div></div>
     </div>
     <img src="favicon-192.png" alt="Logo">
-    <h1>Praia do Cassino</h1>
+    <h1>Praia do Cassino ao vivo</h1>
 </header>
 
 <div class="overlay-bg" onclick="toggleMenu()"></div>
@@ -174,7 +176,7 @@
     <ul>
         <li><strong>Molhes da Barra:</strong> Engenharia com 4,5 km mar adentro. Passeios de vagoneta e avistamento de lobos-marinhos.</li>
         <li><strong>Navio Altair:</strong> Naufrágio histórico de 1976, localizado a 21 km dos Molhes.</li>
-        <li><strong>Infraestrutura:</strong> Balneário mais antigo do Brasil, com destaque para a Avenida Rio Grande.</li>
+        <!--li><strong>Infraestrutura:</strong> Balneário mais antigo do Brasil, com destaque para a Avenida Rio Grande.</li-->
         <li><strong>Natureza:</strong> Vasta faixa de areia ideal para esportes, caminhadas e circulação de carros.</li>
     </ul>
     <p style="font-size: 0.9rem; color: #888; margin-top: 20px;">Fonte: Informações turísticas de Rio Grande/RS.</p>
@@ -202,11 +204,10 @@
 </div>
 
 <footer>
-    &copy; 2026 ManyGAMEs - <a href="https://www.manygames.com.br" style="color: #fff; text-decoration: none;">www.manygames.com.br</a>
+    &copy; 2026 ManyGAMEs - <a href="https://www.manygames.com.br" style="color: #fff; text-decoration: none;">manygames.com.br</a>
 </footer>
 
 <script>
-    // Lógica do Clima (Mantida exatamente como aprovada)
     async function atualizarClima() {
         const url = `https://api.openweathermap.org/data/2.5/weather?id=3451138&units=metric&lang=pt_br&appid=936224fc4d0527d53efee60f3396cf85`;
         try {
@@ -227,7 +228,6 @@
     atualizarClima();
     setInterval(atualizarClima, 900000);
 
-    // Lógica de Fullscreen para o Iframe
     function alternarFullScreen(ligar) {
         const alvo = document.getElementById('container-video');
         if (ligar) {
